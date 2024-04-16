@@ -1,11 +1,30 @@
 import { createStore } from "redux";
 
 
-const reducer= (state=0,action) =>{
-    switch(action.type){
-        case "INCREMENT" : return state+5;
-        case "DECREMENT" : return state-5;
-        default: return state;
+const reducer= (state={counter:0},action) =>{
+    if(action.type==="INCREMENT"){
+        return{
+          counter:  state.counter+2
+
+        };
+       
     }
+    if(action.type==="DECREMENT"){
+        return{
+          counter:  state.counter-2
+
+        };
+        return state;
 }
-export const store= createStore(reducer);
+}
+ const store= createStore(reducer);
+
+const counterSubsriber = () =>{
+   const latestState= store.getState();
+    console.log(latestState);
+};
+store.subscribe(counterSubsriber);
+store.dispatch({type:'INCREMENT'});
+store.dispatch({type:'DECREMENT'});
+
+export default store;
